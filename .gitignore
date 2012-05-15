@@ -1,3 +1,17 @@
+# Qt Creator settings
+*.pro.user
+
+# Build files 
+Makefile
+piano-keyboard
+
+# Backup files
+*.swp
+*~
+
+
+########
+
 # Compiled Object files
 *.slo
 *.lo
