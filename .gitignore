@@ -1,9 +1,8 @@
-# Qt Creator settings
-*.pro.user
-
 # Build files 
+*.pro.user
 Makefile
-piano-keyboard
+piano_keyboard
+moc_*
 
 # Backup files
 *.swp
