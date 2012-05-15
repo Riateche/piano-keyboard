@@ -5,6 +5,8 @@
 #include <QDebug>
 #include "Midi_reader.h"
 
+#define MIDI_DEVICE_NAME "YAMAHA"
+
 using namespace std;
 
 int main(int argc, char *argv[]) {
@@ -14,7 +16,7 @@ int main(int argc, char *argv[]) {
   int count = Pm_CountDevices();
   for(int i = 0; i < count; i++) {
     const PmDeviceInfo* info = Pm_GetDeviceInfo(i);
-    if ( info->input == 1 && QString(info->name).contains("YAMAHA")) {
+    if ( info->input == 1 && QString(info->name).contains(MIDI_DEVICE_NAME)) {
       good_id = i;
     }
     qDebug() << i << (good_id == i? "(*)":"") << ": " << info->name <<  " input: " << info->input << " output: " << info->output;
