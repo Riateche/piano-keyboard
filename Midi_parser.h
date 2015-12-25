@@ -11,6 +11,7 @@ class Midi_parser: public QObject {
 public:
   Midi_parser();
   void add(int note, int volume);
+  void add_cc(int controller, int value);
   //bool has_note();
   //QPair<Note_set, bool> get();
 
