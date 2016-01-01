@@ -26,11 +26,20 @@ void Midi_reader::emulate_key(QString key, bool pressed) {
 void Midi_reader::read() {
   PmEvent event;
   int c = Pm_Read(stream, &event, 1);
-  if (c != 0 && Pm_MessageStatus(event.message) == 144) {
-    parser.add(
-          Pm_MessageData1 (event.message),
-          Pm_MessageData2 (event.message)
-    );
+  if (c != 0) {
+    int status = Pm_MessageStatus(event.message) & 0xf0; // Strip channel
+
+    if (status == 0x90) { // Note On
+      parser.add(
+            Pm_MessageData1 (event.message),
+            Pm_MessageData2 (event.message)
+      );
+    } else if (status == 0xB0){ // Control Change
+      parser.add_cc(
+            Pm_MessageData1 (event.message),
+            Pm_MessageData2 (event.message)
+      );
+    }
   }
 }
 

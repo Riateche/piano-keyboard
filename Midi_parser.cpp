@@ -35,6 +35,15 @@ void Midi_parser::add(int note, int volume) {
   //qDebug() << d.join(" ");
 }
 
+void Midi_parser::add_cc(int controller, int value) {
+  Note n(controller, value);
+
+  Note_set set;
+  set.insert(n);
+  emit key_event(set, true);
+  emit key_event(set, false);
+}
+
 void Midi_parser::check() {
   if (!new_event.isEmpty() &&
       QTime::currentTime().msec() - last_time.msec() > commit_delay) {

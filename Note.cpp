@@ -7,23 +7,23 @@ Note::Note(int midi_number) {
   int n = midi_number - 21;
   octave = n / 12;
   tone = (n - octave * 12);
+  cc_message = false;
+}
+
+Note::Note(int controller, int value) :
+  controller(controller),
+  value(value)
+{
+  cc_message = true;
 }
 
 QString Note::to_string() const {
-  return QObject::tr("%1%2").arg(octave).arg(
-    tone == 0?  "A":
-    tone == 1?  "A#":
-    tone == 2?  "B":
-    tone == 3?  "C":
-    tone == 4?  "C#":
-    tone == 5?  "D":
-    tone == 6?  "D#":
-    tone == 7?  "E":
-    tone == 8?  "F":
-    tone == 9?  "F#":
-    tone == 10? "G":
-    tone == 11? "G#": "??"
-  );
+  if (!cc_message) {
+    const char* tones[] = {"A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"};
+    return QObject::tr("%1%2").arg(octave).arg(tone < 12? tones[tone]: "??");
+  } else {
+    return QObject::tr("CC%1/%2").arg(controller).arg(value);
+  }
 }
 
 QDebug operator<<(QDebug debug, const Note& note) {

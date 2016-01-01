@@ -8,8 +8,13 @@
 class Note {
 public:
   Note(int midi_number);
+  Note(int controller, int value);
+
   QString to_string() const;
   int tone, octave;
+
+  bool cc_message;
+  int controller, value;
 };
 
 QDebug operator<<(QDebug debug, const Note& note);
